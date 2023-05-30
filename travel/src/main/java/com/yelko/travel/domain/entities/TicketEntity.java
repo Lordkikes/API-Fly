@@ -2,6 +2,8 @@ package com.yelko.travel.domain.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -16,7 +18,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name= "ticket")
+@Entity(name = "ticket")
 public class TicketEntity {
 
     @Id
@@ -25,6 +27,10 @@ public class TicketEntity {
     private LocalDate arrivalDate;
     private LocalDate purchaseDate;
     private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "fly_id")
+    private FlyEntity fly;
 
 
     @Override

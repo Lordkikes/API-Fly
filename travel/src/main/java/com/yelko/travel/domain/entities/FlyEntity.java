@@ -7,7 +7,9 @@ import org.hibernate.Hibernate;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -34,6 +36,14 @@ public class FlyEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private AeroLine aeroLine;
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            mappedBy = "fly"
+    )
+    private Set<TicketEntity> tickets;
+
 
     @Override
     public boolean equals(Object o) {

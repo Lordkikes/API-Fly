@@ -1,8 +1,6 @@
 package com.yelko.travel.domain.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -29,6 +27,10 @@ public class ReservationEntity {
     private LocalDate dateEnd;
     private Integer totalDays;
     private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "hotel_id")
+    private HotelEntity hotel;
 
     @Override
     public boolean equals(Object o) {

@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,6 +29,14 @@ public class HotelEntity {
 
     private Integer rating;
     private BigDecimal price;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            mappedBy = "hotel"
+    )
+    private Set<ReservationEntity> reservations;
 
     @Override
     public boolean equals(Object o) {
