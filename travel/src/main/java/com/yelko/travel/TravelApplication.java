@@ -1,13 +1,33 @@
 package com.yelko.travel;
 
+import com.yelko.travel.domain.repositories.FlyRepository;
+import com.yelko.travel.domain.repositories.HotelRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TravelApplication {
+@Slf4j
+public class TravelApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TravelApplication.class, args);
+    @Autowired
+    private HotelRepository hotelRepository;
+
+    @Autowired
+    private FlyRepository flyRepository;
+
+    public static void main(String[] args) {
+        SpringApplication.run(TravelApplication.class, args);
+    }
+
+	@Override
+	public void run(String... args) throws Exception {
+		var fly = flyRepository.findById(15L).get();
+		var hotel = hotelRepository.findById(7L).get();
+
+		log.info(String.valueOf(fly));
+		log.info(String.valueOf(hotel));
 	}
-
 }

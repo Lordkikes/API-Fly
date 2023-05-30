@@ -1,10 +1,12 @@
 package com.yelko.travel.domain.entities;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
@@ -13,27 +15,26 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name= "hotel")
-public class HotelEntity {
+@Entity(name= "customer")
+public class CustomerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String id;
     @Column(length = 50)
-    private String name;
-
-    @Column(length = 50)
-    private String adddress;
-
-    private Integer rating;
-    private BigDecimal price;
+    private String fullName;
+    @Column(length = 20)
+    private String creditCard;
+    @Column(length = 12)
+    private String phoneNumbre;
+    private Integer totalFlights;
+    private Integer totalLodgings;
+    private Integer totalTours;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        HotelEntity that = (HotelEntity) o;
+        CustomerEntity that = (CustomerEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 

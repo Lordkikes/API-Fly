@@ -1,11 +1,16 @@
 package com.yelko.travel.domain.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,27 +18,23 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name= "hotel")
-public class HotelEntity {
+@Entity(name= "reservation")
+public class ReservationEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(length = 50)
-    private String name;
-
-    @Column(length = 50)
-    private String adddress;
-
-    private Integer rating;
+    private UUID id;
+    @Column(name = "date_reservation")
+    private LocalDateTime dateTimeReservation;
+    private LocalDate dateStart;
+    private LocalDate dateEnd;
+    private Integer totalDays;
     private BigDecimal price;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        HotelEntity that = (HotelEntity) o;
+        ReservationEntity that = (ReservationEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 
