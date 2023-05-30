@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:12-alpine
+    container_name: best_travel
+    restart: always
+    environment:
+      POSTGRES_DB: travel
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: Ory1102
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/sql/create_schema.sql:/docker-entrypoint-initdb.d/create_schema.sql
+      - ./db/sql/data.sql:/docker-entrypoint-initdb.d/data.sql
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - database
+    ports:
+      - 8080:8080
