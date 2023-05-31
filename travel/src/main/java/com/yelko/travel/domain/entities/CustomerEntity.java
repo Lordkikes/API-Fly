@@ -1,13 +1,12 @@
 package com.yelko.travel.domain.entities;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,7 +18,7 @@ import java.util.Objects;
 public class CustomerEntity {
 
     @Id
-    private String id;
+    private String dni;
     @Column(length = 50)
     private String fullName;
     @Column(length = 20)
@@ -29,13 +28,34 @@ public class CustomerEntity {
     private Integer totalFlights;
     private Integer totalLodgings;
     private Integer totalTours;
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            mappedBy = "customer"
+    )
+    private Set<TicketEntity> tickets;
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            mappedBy = "customer"
+    )
+    private Set<ReservationEntity> reservations;
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            mappedBy = "customer"
+    )
+    private Set<TourEntity> tours;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         CustomerEntity that = (CustomerEntity) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        return getDni() != null && Objects.equals(getDni(), that.getDni());
     }
 
     @Override
