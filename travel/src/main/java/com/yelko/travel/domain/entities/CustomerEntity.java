@@ -28,6 +28,8 @@ public class CustomerEntity {
     private Integer totalFlights;
     private Integer totalLodgings;
     private Integer totalTours;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
@@ -35,6 +37,8 @@ public class CustomerEntity {
             mappedBy = "customer"
     )
     private Set<TicketEntity> tickets;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
@@ -42,6 +46,8 @@ public class CustomerEntity {
             mappedBy = "customer"
     )
     private Set<ReservationEntity> reservations;
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
