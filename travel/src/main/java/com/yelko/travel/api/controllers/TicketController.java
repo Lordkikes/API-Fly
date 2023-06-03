@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -19,6 +22,11 @@ public class TicketController {
     @GetMapping("/byId/{id}")
     public ResponseEntity<TicketResponse> getTicket(@PathVariable UUID id){
         return ResponseEntity.ok(ticketService.read(id));
+    }
+
+    @GetMapping("/byPrice")
+    public ResponseEntity<Map<String, BigDecimal>> getFlyPrice(@RequestParam Long flyId){
+        return ResponseEntity.ok(Collections.singletonMap("flyPrice", this.ticketService.findPrice(flyId)));
     }
 
     @PostMapping("/createTicket")

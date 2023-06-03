@@ -1,5 +1,6 @@
 package com.yelko.travel.api.models.responses;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yelko.travel.domain.entities.HotelEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,11 +19,15 @@ import java.util.UUID;
 public class ReservationResponse {
 
     private UUID id;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateTimeReservation;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateStart;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateEnd;
     private Integer totalDays;
     private BigDecimal price;
-    private HotelEntity hotel;
+    private HotelResponse hotel;
 
 }
