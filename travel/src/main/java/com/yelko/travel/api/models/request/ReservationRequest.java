@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReservationRequest {
-
     private String idClient;
     private Long idHotel;
 }
