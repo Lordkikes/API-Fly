@@ -8,6 +8,7 @@ import com.yelko.travel.domain.repositories.CustomerRepository;
 import com.yelko.travel.domain.repositories.FlyRepository;
 import com.yelko.travel.domain.repositories.TicketRepository;
 import com.yelko.travel.infraestructure.abstract_services.ITicketService;
+import com.yelko.travel.util.BestTravelUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -43,8 +44,8 @@ public class TicketService implements ITicketService {
                 .customer(customer)
                 .price(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)))
                 .purchaseDate(LocalDate.now())
-                .arrivalDate(LocalDateTime.now())
-                .departureDate(LocalDateTime.now())
+                .arrivalDate(BestTravelUtil.getRandomLatter())
+                .departureDate(BestTravelUtil.getRandomSoon())
                 .build();
 
         var ticketPersisted = this.ticketRepository.save(ticketToPersist);
@@ -68,8 +69,8 @@ public class TicketService implements ITicketService {
 
         ticketToUpdate.setFly(fly);
         ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)));
-        ticketToUpdate.setArrivalDate(LocalDateTime.now());
-        ticketToUpdate.setDepartureDate(LocalDateTime.now());
+        ticketToUpdate.setArrivalDate(BestTravelUtil.getRandomLatter());
+        ticketToUpdate.setDepartureDate(BestTravelUtil.getRandomSoon());
 
         var ticketUpdated = this.ticketRepository.save(ticketToUpdate);
 
