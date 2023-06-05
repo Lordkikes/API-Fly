@@ -1,12 +1,9 @@
 package com.yelko.travel.infraestructure.services;
 
 import com.yelko.travel.api.models.request.ReservationRequest;
-import com.yelko.travel.api.models.responses.FlyResponse;
 import com.yelko.travel.api.models.responses.HotelResponse;
 import com.yelko.travel.api.models.responses.ReservationResponse;
-import com.yelko.travel.api.models.responses.TicketResponse;
 import com.yelko.travel.domain.entities.ReservationEntity;
-import com.yelko.travel.domain.entities.TicketEntity;
 import com.yelko.travel.domain.repositories.*;
 import com.yelko.travel.infraestructure.abstract_services.IReservationService;
 import lombok.AllArgsConstructor;
@@ -20,6 +17,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static com.yelko.travel.util.Constants.CHARGER_PRICE_PERCENTAGE_20;
+
 
 @Transactional
 @Service
@@ -27,7 +26,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ReservationService implements IReservationService {
 
-    private static final BigDecimal charger_price_percentage = BigDecimal.valueOf(0.20);
+
     private final HotelRepository hotelRepository;
     private final CustomerRepository customerRepository;
     private final ReservationRepository reservationRepository;
@@ -45,7 +44,7 @@ public class ReservationService implements IReservationService {
                 .dateTimeReservation(LocalDateTime.now())
                 .dateStart(LocalDate.now())
                 .dateEnd(LocalDate.now())
-                .price(hotel.getPrice().add(hotel.getPrice().multiply(charger_price_percentage)))
+                .price(hotel.getPrice().add(hotel.getPrice().multiply(CHARGER_PRICE_PERCENTAGE_20)))
                 .build();
 
         var reservationPersisted = reservationRepository.save(reservationToPersist);
@@ -71,7 +70,7 @@ public class ReservationService implements IReservationService {
         reservationToUpdate.setDateTimeReservation(LocalDateTime.now());
         reservationToUpdate.setDateStart(LocalDate.now());
         reservationToUpdate.setDateEnd(LocalDate.now().plusDays(request.getTotalDays()));
-        reservationToUpdate.setPrice(hotel.getPrice().add(hotel.getPrice().multiply(charger_price_percentage)));
+        reservationToUpdate.setPrice(hotel.getPrice().add(hotel.getPrice().multiply(CHARGER_PRICE_PERCENTAGE_20)));
 
         var reservationUpdated = this.reservationRepository.save(reservationToUpdate);
 
@@ -89,7 +88,7 @@ public class ReservationService implements IReservationService {
     @Override
     public BigDecimal findPrice(Long hotelId) {
         var hotel = hotelRepository.findById(hotelId).orElseThrow();
-        return hotel.getPrice().add(hotel.getPrice().multiply(charger_price_percentage));
+        return hotel.getPrice().add(hotel.getPrice().multiply(CHARGER_PRICE_PERCENTAGE_20));
     }
 
     private ReservationResponse entityToResponse(ReservationEntity entity) {

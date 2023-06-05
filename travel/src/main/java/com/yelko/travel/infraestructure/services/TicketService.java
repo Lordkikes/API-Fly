@@ -17,16 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
+
+import static com.yelko.travel.util.Constants.CHARGER_PRICE_PERCENTAGE_25;
 
 @Transactional
 @Service
 @Slf4j
 @AllArgsConstructor
 public class TicketService implements ITicketService {
-
-    private static final BigDecimal charger_price_percentage = BigDecimal.valueOf(0.25);
 
     private final FlyRepository flyRepository;
     private final CustomerRepository customerRepository;
@@ -42,7 +41,7 @@ public class TicketService implements ITicketService {
                 .id(UUID.randomUUID())
                 .fly(fly)
                 .customer(customer)
-                .price(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)))
+                .price(fly.getPrice().add(fly.getPrice().multiply(CHARGER_PRICE_PERCENTAGE_25)))
                 .purchaseDate(LocalDate.now())
                 .arrivalDate(BestTravelUtil.getRandomLatter())
                 .departureDate(BestTravelUtil.getRandomSoon())
@@ -68,7 +67,7 @@ public class TicketService implements ITicketService {
         var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
 
         ticketToUpdate.setFly(fly);
-        ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)));
+        ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(CHARGER_PRICE_PERCENTAGE_25)));
         ticketToUpdate.setArrivalDate(BestTravelUtil.getRandomLatter());
         ticketToUpdate.setDepartureDate(BestTravelUtil.getRandomSoon());
 
@@ -104,6 +103,6 @@ public class TicketService implements ITicketService {
     public BigDecimal findPrice(Long flyId) {
 
         var fly = this.flyRepository.findById(flyId).orElseThrow();
-        return fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage));
+        return fly.getPrice().add(fly.getPrice().multiply(CHARGER_PRICE_PERCENTAGE_25));
     }
 }
